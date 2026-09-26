@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Energy Conservation & Green Buildings — MCQ Practice</title>
+<style>
+  :root {
+    --bg: #f4f6f8;
+    --card-bg: #ffffff;
+    --text: #1a1f28;
+    --subtext: #5a6472;
+    --border: #dbe1e8;
+    --accent: #2b6f4f;
+    --accent-light: #e5f3ec;
+    --correct: #1e8e3e;
+    --correct-bg: #e6f6ea;
+    --wrong: #c0392b;
+    --wrong-bg: #fceceb;
+    --header-bg: #1f2d24;
+    --header-text: #ffffff;
+    --btn-bg: #eef1f4;
+    --btn-hover: #e2e7ec;
+  }
+  [data-theme="dark"] {
+    --bg: #14181c;
+    --card-bg: #1e242b;
+    --text: #e8edf2;
+    --subtext: #9aa6b2;
+    --border: #303842;
+    --accent: #5fbf8f;
+    --accent-light: #223428;
+    --correct: #5fbf8f;
+    --correct-bg: #1c3327;
+    --wrong: #e8776b;
+    --wrong-bg: #3a2422;
+    --header-bg: #10151a;
+    --header-text: #eef2f4;
+    --btn-bg: #262e36;
+    --btn-hover: #313b45;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: background 0.2s, color 0.2s;
+  }
+  header {
+    background: var(--header-bg);
+    color: var(--header-text);
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  header h1 {
+    font-size: 16px;
+    margin: 0;
+    font-weight: 600;
+  }
+  header .sub {
+    font-size: 12px;
+    opacity: 0.75;
+    margin-top: 2px;
+  }
+  #themeToggle {
+    background: rgba(255,255,255,0.12);
+    border: none;
+    color: var(--header-text);
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+  .controls {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  select, button.ctrl {
+    padding: 9px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--btn-bg);
+    color: var(--text);
+    font-size: 13px;
+    cursor: pointer;
+  }
+  button.ctrl:hover, select:hover { background: var(--btn-hover); }
+  .stats {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--subtext);
+    margin-bottom: 10px;
+  }
+  .progress-bar {
+    height: 6px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    transition: width 0.2s;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+  }
+  .topic-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 4px 9px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+  .qnum {
+    font-size: 12px;
+    color: var(--subtext);
+    margin-bottom: 6px;
+  }
+  .question {
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 16px;
+  }
+  .option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 12px 14px;
+    margin-bottom: 9px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--btn-bg);
+    color: var(--text);
+    font-size: 14.5px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .option:hover:not(:disabled) { background: var(--btn-hover); }
+  .option:disabled { cursor: default; }
+  .option.correct {
+    background: var(--correct-bg);
+    border-color: var(--correct);
+    color: var(--correct);
+    font-weight: 600;
+  }
+  .option.wrong {
+    background: var(--wrong-bg);
+    border-color: var(--wrong);
+    color: var(--wrong);
+    font-weight: 600;
+  }
+  .explanation {
+    margin-top: 12px;
+    padding: 12px 14px;
+    background: var(--accent-light);
+    border-radius: 10px;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--text);
+    display: none;
+  }
+  .explanation.show { display: block; }
+  .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 18px;
+    gap: 10px;
+  }
+  .nav-buttons button {
+    flex: 1;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  #prevBtn { background: var(--btn-bg); color: var(--text); }
+  #nextBtn { background: var(--accent); color: #fff; }
+  #prevBtn:disabled, #nextBtn:disabled { opacity: 0.4; cursor: default; }
+  footer {
+    text-align: center;
+    font-size: 12px;
+    color: var(--subtext);
+    padding: 20px 16px 30px;
+  }
+  .reset-link {
+    background: none;
+    border: none;
+    color: var(--subtext);
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 12px;
+  }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Energy Conservation & Green Buildings</h1>
+    <div class="sub">MCQ Practice — App 002</div>
+  </div>
+  <button id="themeToggle">🌙 Dark</button>
+</header>
+
+<main>
+  <div class="controls">
+    <select id="topicFilter"></select>
+    <button class="ctrl" id="shuffleBtn">🔀 Shuffle</button>
+    <button class="ctrl" id="filterUnanswered">Unanswered only</button>
+  </div>
+
+  <div class="stats">
+    <span id="progressText">Question 1 of 200</span>
+    <span id="scoreText">Score: 0 / 0</span>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+
+  <div class="card">
+    <div class="topic-tag" id="topicTag">Topic</div>
+    <div class="qnum" id="qnum"></div>
+    <div class="question" id="questionText"></div>
+    <div id="optionsContainer"></div>
+    <div class="explanation" id="explanation"></div>
+  </div>
+
+  <div class="nav-buttons">
+    <button id="prevBtn">← Previous</button>
+    <button id="nextBtn">Next →</button>
+  </div>
+</main>
+
+<footer>
+  <button class="reset-link" id="resetBtn">Reset all progress</button>
+</footer>
+
+<script>
+const QUESTIONS = [
+// ---------------- CLIMATE RESPONSIVE DESIGN (25) ----------------
+{t:"Climate Responsive Design", q:"Which climatic zone is characterized by high diurnal temperature range, low humidity and intense solar radiation?", o:["Warm & Humid","Hot & Dry","Cold","Temperate"], c:1, e:"Hot & dry zones (e.g. Jodhpur, Jaisalmer) have large day-night temperature swings and low humidity."},
+{t:"Climate Responsive Design", q:"Which of these is a typical warm & humid climate city in India?", o:["Jodhpur","Shimla","Chennai","Leh"], c:2, e:"Chennai experiences high temperature combined with high humidity, typical of the warm & humid zone."},
+{t:"Climate Responsive Design", q:"Delhi falls under which climatic zone as per NBC classification?", o:["Cold","Composite","Hot & Dry","Warm & Humid"], c:1, e:"Delhi has a composite climate — hot summers, cold winters and a monsoon season."},
+{t:"Climate Responsive Design", q:"In cold climates, which design strategy is most recommended?", o:["Large openings on north façade","South-facing glazing for solar gain","Elongated open plan","Light coloured reflective walls"], c:1, e:"South-facing glazing maximizes passive solar heat gain in cold climates."},
+{t:"Climate Responsive Design", q:"The traditional wind-catching tower used in hot-dry vernacular architecture is called a:", o:["Trombe wall","Badgir","Jaali","Chajja"], c:1, e:"A badgir (wind tower) catches and channels breeze downward for passive cooling in hot-dry regions."},
+{t:"Climate Responsive Design", q:"Which building form is recommended for warm & humid climates to maximize cross-ventilation?", o:["Compact courtyard form","Elongated, open plan form","Earth-sheltered form","Fully enclosed form"], c:1, e:"An elongated, open plan increases exposure to prevailing breezes for effective cross-ventilation."},
+{t:"Climate Responsive Design", q:"To minimize solar exposure from low-angle morning and evening sun, a building's long axis should ideally run:", o:["North-South","East-West","Northeast-Southwest","No orientation matters"], c:1, e:"An east-west long axis limits the wall area exposed to low, intense east/west sun."},
+{t:"Climate Responsive Design", q:"Which façade is generally easiest to shade effectively due to the sun's high altitude at that orientation?", o:["East","West","South","North (as seen from northern hemisphere)"], c:2, e:"In the northern hemisphere, the south façade receives high-angle sun, making horizontal shading devices very effective."},
+{t:"Climate Responsive Design", q:"A compact building form with a low surface-area-to-volume ratio is most beneficial in:", o:["Warm & humid climate","Hot-dry and cold climates","Temperate climate only","No climate in particular"], c:1, e:"Compact forms reduce heat gain/loss through the envelope — useful in climate extremes like hot-dry and cold."},
+{t:"Climate Responsive Design", q:"A courtyard primarily helps create a favourable microclimate mainly through:", o:["Direct solar gain only","Stack ventilation and shading","Increased glare","Increased humidity always"], c:1, e:"Courtyards enable buoyancy-driven (stack) ventilation and provide shaded, cooler outdoor space."},
+{t:"Climate Responsive Design", q:"Deciduous trees are favoured in passive landscape design because they:", o:["Provide shade year-round","Shade in summer and allow sun penetration in winter","Block wind completely","Increase glare"], c:1, e:"Deciduous trees lose leaves in winter, allowing solar gain when needed, and shade in summer when unwanted."},
+{t:"Climate Responsive Design", q:"Light-coloured, reflective exterior surfaces are most recommended in which climate?", o:["Cold", "Hot & Dry", "Temperate", "None"], c:1, e:"Light colours reflect solar radiation, reducing heat gain in hot climates."},
+{t:"Climate Responsive Design", q:"Dark, absorptive exterior finishes are advantageous in:", o:["Hot & dry climate","Warm & humid climate","Cold climate","Composite climate always"], c:2, e:"Dark surfaces absorb solar radiation, helping with passive heating in cold climates."},
+{t:"Climate Responsive Design", q:"A 'chajja' is best described as a:", o:["Vertical louvre","Horizontal shading projection","Ventilated wall cavity","Water body for cooling"], c:1, e:"A chajja is a horizontal projecting shading device commonly used over openings in Indian architecture."},
+{t:"Climate Responsive Design", q:"A 'jaali' (perforated screen) primarily serves which combination of functions?", o:["Structural support only","Shading, ventilation and privacy","Waterproofing only","Acoustic isolation only"], c:1, e:"Jaalis allow filtered light and air while providing shade and visual privacy."},
+{t:"Climate Responsive Design", q:"As per the National Building Code (NBC), India is broadly classified into how many climatic zones?", o:["3","4","5","6"], c:2, e:"NBC classifies India into five zones: hot-dry, warm-humid, composite, cold and temperate."},
+{t:"Climate Responsive Design", q:"In warm & humid climates, roofs are typically designed with:", o:["Flat roof, no overhang","Pitched roof with large overhangs","Green roof only","No roof insulation needed"], c:1, e:"Pitched roofs with large overhangs shed heavy rainfall and shade walls from sun and rain."},
+{t:"Climate Responsive Design", q:"In hot & dry climates, window openings are generally kept:", o:["Very large","Small","Fully glazed","Absent entirely"], c:1, e:"Small openings limit heat gain and dust ingress typical of hot-dry regions."},
+{t:"Climate Responsive Design", q:"Water bodies within a courtyard mainly aid passive cooling through:", o:["Conductive cooling","Evaporative cooling","Radiative heating","Convective heating"], c:1, e:"Evaporation of water absorbs heat from surrounding air, providing passive evaporative cooling."},
+{t:"Climate Responsive Design", q:"The overall purpose of climate responsive design is to:", o:["Maximize mechanical HVAC use","Reduce dependence on mechanical heating/cooling","Ignore local climate for uniform design","Increase embodied energy"], c:1, e:"Climate responsive design works with local climate to minimize reliance on active mechanical systems."},
+{t:"Climate Responsive Design", q:"An elongated building form is preferred in which climate to maximize ventilation?", o:["Cold","Hot & dry","Warm & humid","Temperate only"], c:2, e:"In warm & humid climates, an elongated form increases exposure to breezes for effective ventilation."},
+{t:"Climate Responsive Design", q:"A raised plinth in warm & humid climate buildings mainly assists with:", o:["Reducing daylight","Ventilation and protection from flooding/dampness","Increasing thermal mass","Blocking wind"], c:1, e:"A raised plinth improves under-floor ventilation and protects against ground moisture and flooding."},
+{t:"Climate Responsive Design", q:"Composite climate design (as in Delhi) typically requires:", o:["A single fixed strategy year-round","Seasonal adaptability with operable shading/ventilation","No shading devices","Permanent sealed envelope"], c:1, e:"Composite climates need flexible, operable design elements to respond to hot, cold and monsoon seasons."},
+{t:"Climate Responsive Design", q:"Windbreaks (rows of trees/vegetation) are primarily used to:", o:["Increase solar gain","Reduce cold wind infiltration","Increase glare","Increase humidity"], c:1, e:"Windbreaks reduce the impact of cold prevailing winds on a building, especially in cold climates."},
+{t:"Climate Responsive Design", q:"Which passive strategy is LEAST appropriate for a hot & dry climate?", o:["Courtyard planning","Large unshaded glazing on all façades","High thermal mass construction","Small, shaded openings"], c:1, e:"Large unshaded glazing would cause excessive heat gain, which is undesirable in hot-dry climates."},
+
+// ---------------- ENERGY EFFICIENT BUILDING DESIGN (25) ----------------
+{t:"Energy Efficient Design", q:"U-value is best defined as the:", o:["Rate of heat transfer through an element per unit area per unit temperature difference","Total energy consumed by a building annually","Amount of daylight entering a room","Volume of a building"], c:0, e:"U-value (W/m²K) quantifies thermal transmittance — how readily heat passes through a building element."},
+{t:"Energy Efficient Design", q:"A lower U-value indicates:", o:["Poorer insulation","Better insulation","No relation to insulation","Higher solar heat gain"], c:1, e:"Lower U-values mean less heat is transmitted, i.e., better insulating performance."},
+{t:"Energy Efficient Design", q:"R-value and U-value are related by the formula:", o:["R = U","R = 1/U","U = R²","R = U + 1"], c:1, e:"Thermal resistance (R-value) is the reciprocal of thermal transmittance (U-value)."},
+{t:"Energy Efficient Design", q:"Which of the following is commonly used as a building insulation material?", o:["Expanded Polystyrene (EPS)","Float glass","Mild steel","Terrazzo"], c:0, e:"EPS (and XPS, mineral wool, PUF panels) are common insulation materials that reduce heat transfer."},
+{t:"Energy Efficient Design", q:"WWR stands for:", o:["Wall Water Ratio","Window-to-Wall Ratio","Wind-Weather Rating","Wall Weight Ratio"], c:1, e:"WWR is the ratio of glazed (window) area to total wall area, affecting daylight and heat gain."},
+{t:"Energy Efficient Design", q:"A high WWR (window-to-wall ratio) without adequate shading typically results in:", o:["Reduced solar heat gain","Increased solar heat gain and glare","No change in comfort","Improved insulation"], c:1, e:"More unshaded glazed area lets in more solar radiation, increasing heat gain and glare risk."},
+{t:"Energy Efficient Design", q:"A 'cool roof' is characterized by:", o:["High solar reflectance and high thermal emittance","Dark colour and low reflectance","No insulation","Maximum thermal mass"], c:0, e:"Cool roofs reflect more sunlight and emit absorbed heat efficiently, reducing roof surface temperatures."},
+{t:"Energy Efficient Design", q:"A green (vegetated) roof primarily helps by:", o:["Increasing heat gain","Reducing heat gain and managing stormwater","Eliminating need for waterproofing","Increasing glare"], c:1, e:"Green roofs provide insulation, evapotranspirative cooling, and retain/slow stormwater runoff."},
+{t:"Energy Efficient Design", q:"High thermal mass construction is most beneficial where:", o:["Diurnal temperature range is very low","Diurnal temperature range is high","Climate is warm & humid with little swing","There is no temperature variation"], c:1, e:"Thermal mass dampens and delays high day-night temperature swings, typical of hot-dry climates."},
+{t:"Energy Efficient Design", q:"'Time lag' in building physics refers to:", o:["The delay between peak outdoor and peak indoor surface temperature due to thermal mass","The time taken to construct a wall","The lag in lighting switch response","The delay in HVAC start-up"], c:0, e:"Time lag is the delay, caused by thermal mass, between the outdoor temperature peak and its effect reaching indoors."},
+{t:"Energy Efficient Design", q:"The 'decrement factor' of a wall/roof is:", o:["The ratio of inner to outer surface temperature swing","The U-value of the material","The colour reflectance value","The window area ratio"], c:0, e:"Decrement factor measures how much a wall/roof dampens the outdoor temperature swing before it reaches the interior surface."},
+{t:"Energy Efficient Design", q:"A lower decrement factor indicates:", o:["Poorer thermal damping","Better thermal damping","Higher U-value","No relation to thermal mass"], c:1, e:"A lower decrement factor means the interior surface experiences a smaller temperature swing — better damping."},
+{t:"Energy Efficient Design", q:"VRF in HVAC systems stands for:", o:["Variable Refrigerant Flow","Vertical Roof Fixture","Ventilated Radiant Floor","Variable Room Fan"], c:0, e:"VRF (Variable Refrigerant Flow) systems efficiently modulate refrigerant flow to match cooling/heating loads."},
+{t:"Energy Efficient Design", q:"Daylight harvesting systems function by:", o:["Blocking all daylight","Using sensors to dim/adjust artificial lighting based on available daylight","Increasing artificial lighting at all times","Removing all windows"], c:1, e:"Daylight harvesting uses photosensors to reduce artificial lighting when sufficient daylight is available, saving energy."},
+{t:"Energy Efficient Design", q:"BMS stands for:", o:["Building Management System","Basic Material Specification","Building Moisture Sensor","Bureau of Material Standards"], c:0, e:"A Building Management System (BMS) monitors and controls a building's mechanical/electrical systems for efficiency."},
+{t:"Energy Efficient Design", q:"BEE star ratings in India are primarily applied to:", o:["Building plots","Appliances and equipment for energy efficiency","Building materials only","Construction labour"], c:1, e:"The Bureau of Energy Efficiency (BEE) star-rates appliances/equipment (ACs, fans, pumps, etc.) by efficiency."},
+{t:"Energy Efficient Design", q:"In tropical climates, which building surface typically receives the highest solar radiation?", o:["North wall","Roof (horizontal surface)","Floor","Basement wall"], c:1, e:"The horizontal roof surface receives the most direct solar exposure through most of the day in tropical latitudes."},
+{t:"Energy Efficient Design", q:"The recommended sequence in energy efficient design is to:", o:["Apply mechanical systems first, then passive strategies","Apply passive strategies first, then efficient active systems","Ignore passive strategies entirely","Apply only renewable energy without envelope design"], c:1, e:"An envelope/passive-first approach reduces the load before selecting efficient mechanical systems, is the standard best practice."},
+{t:"Energy Efficient Design", q:"Heat recovery ventilation systems primarily function to:", o:["Waste exhaust air energy","Recover energy from exhaust air to precondition incoming fresh air","Increase energy consumption","Eliminate need for ventilation"], c:1, e:"Heat recovery ventilators transfer energy from outgoing exhaust air to incoming fresh air, saving conditioning energy."},
+{t:"Energy Efficient Design", q:"Chilled beam systems provide cooling mainly through:", o:["Forced air only","Radiant and convective heat exchange with chilled water pipes","Evaporative cooling only","Photovoltaic power"], c:1, e:"Chilled beams circulate chilled water through beams, cooling air via radiation and convection."},
+{t:"Energy Efficient Design", q:"To reduce solar heat gain in a tropical building, minimizing WWR is most critical on the:", o:["North façade","West façade","South façade only","Roof only"], c:1, e:"The west façade receives intense low-angle afternoon sun, making it the most critical for reducing heat gain."},
+{t:"Energy Efficient Design", q:"'Envelope-first' design approach means:", o:["Ignoring the building envelope","Optimizing the building envelope before sizing mechanical systems","Designing interiors before the envelope","Focusing only on lighting"], c:1, e:"Optimizing walls, roof, and glazing first reduces the cooling/heating load before selecting HVAC capacity."},
+{t:"Energy Efficient Design", q:"Which insulation material is typically installed as a blown-in loose fill?", o:["Cellulose insulation","Float glass","Reinforced concrete","Terracotta tile"], c:0, e:"Cellulose insulation is commonly blown into wall or attic cavities as loose fill."},
+{t:"Energy Efficient Design", q:"Insulated roofs primarily reduce heat gain by minimizing:", o:["Radiative heat loss only","Conductive heat transfer through the roof","Evaporative losses","Electrical losses"], c:1, e:"Roof insulation reduces conductive heat flow from the hot exterior surface to the interior."},
+{t:"Energy Efficient Design", q:"Efficient motors and pumps in India are typically rated using the:", o:["GRIHA rating","BEE star labeling programme","ECBC compliance level","LEED credit system"], c:1, e:"BEE star labeling rates the energy efficiency of motors, pumps and other equipment."},
+
+// ---------------- GREEN BUILDING RATING SYSTEMS (25) ----------------
+{t:"Green Rating Systems", q:"GRIHA (Green Rating for Integrated Habitat Assessment) was developed by:", o:["USGBC","TERI","BRE","CII"], c:1, e:"GRIHA was developed by TERI (The Energy and Resources Institute) as India's own green rating system."},
+{t:"Green Rating Systems", q:"GRIHA is officially endorsed as the national rating system by which ministry?", o:["Ministry of Urban Development","Ministry of New and Renewable Energy (MNRE)","Ministry of Environment, Forest and Climate Change","Ministry of Housing"], c:1, e:"MNRE has adopted GRIHA as the national rating system for green buildings in India."},
+{t:"Green Rating Systems", q:"GRIHA ratings are expressed on a scale of:", o:["1 to 3 stars","1 to 5 stars","A to F grades","1 to 10 points only"], c:1, e:"GRIHA uses a 1-to-5 star rating based on points scored out of 100."},
+{t:"Green Rating Systems", q:"SVAGRIHA is a simplified GRIHA variant meant for:", o:["Large townships","Small and affordable buildings/plots","Industrial complexes only","Government buildings only"], c:1, e:"SVAGRIHA (Simple Versatile Affordable GRIHA) targets smaller buildings with a simplified assessment process."},
+{t:"Green Rating Systems", q:"GRIHA LD is intended for:", o:["Individual small houses","Large developments/townships","Interior fit-outs only","Existing buildings only"], c:1, e:"GRIHA LD (Large Developments) rates townships and large-scale master-planned developments."},
+{t:"Green Rating Systems", q:"IGBC (Indian Green Building Council) operates under which organisation?", o:["TERI","CII (Confederation of Indian Industry)","BEE","MNRE"], c:1, e:"IGBC was established by CII to promote green building practices in India."},
+{t:"Green Rating Systems", q:"IGBC certification levels, from lowest to highest, are:", o:["Bronze, Silver, Gold, Diamond","Certified, Silver, Gold, Platinum","Basic, Standard, Advanced, Premium","1 Star to 5 Star"], c:1, e:"IGBC follows a tiered system: Certified, Silver, Gold, and Platinum, similar to LEED."},
+{t:"Green Rating Systems", q:"LEED (Leadership in Energy and Environmental Design) originated in which country?", o:["India","UK","USA","Japan"], c:2, e:"LEED was developed by the U.S. Green Building Council (USGBC)."},
+{t:"Green Rating Systems", q:"BREEAM, one of the world's oldest green building rating systems, originated in:", o:["USA","UK","Australia","Germany"], c:1, e:"BREEAM (Building Research Establishment Environmental Assessment Method) was developed in the UK by BRE."},
+{t:"Green Rating Systems", q:"CASBEE is a green rating system developed in:", o:["Japan","China","Singapore","South Korea"], c:0, e:"CASBEE (Comprehensive Assessment System for Built Environment Efficiency) originated in Japan."},
+{t:"Green Rating Systems", q:"ECBC (Energy Conservation Building Code) is issued by:", o:["MNRE","TERI","Bureau of Energy Efficiency (BEE)","CII"], c:2, e:"ECBC is formulated and issued by BEE under the Ministry of Power."},
+{t:"Green Rating Systems", q:"ECBC was first launched in India in the year:", o:["2001","2007","2012","2017"], c:1, e:"ECBC was first launched in 2007, with a major revision released in 2017."},
+{t:"Green Rating Systems", q:"ECBC 2017 defines which three tiers of compliance?", o:["Basic, Standard, Advanced","ECBC, ECBC+, Super ECBC","Bronze, Silver, Gold","Level 1, Level 2, Level 3"], c:1, e:"ECBC 2017 introduced three progressively stringent compliance tiers: ECBC, ECBC+, and Super ECBC."},
+{t:"Green Rating Systems", q:"Eco-Niwas Samhita is BEE's energy conservation code specifically for:", o:["Commercial high-rises","Residential buildings","Industrial sheds","Airports"], c:1, e:"Eco-Niwas Samhita sets minimum energy performance standards for residential buildings."},
+{t:"Green Rating Systems", q:"Eco-Niwas Samhita Part I primarily addresses:", o:["Electro-mechanical systems","Building envelope","Landscape design","Interior finishes"], c:1, e:"Part I of Eco-Niwas Samhita focuses on the building envelope for residential energy performance."},
+{t:"Green Rating Systems", q:"SHGC stands for:", o:["Solar Heat Gain Coefficient","Solar Housing Green Certificate","Standard Heat Generation Code","Structural Heat Glazing Class"], c:0, e:"SHGC (Solar Heat Gain Coefficient) is the fraction of solar radiation admitted through a glazing unit."},
+{t:"Green Rating Systems", q:"A lower SHGC value for window glazing means:", o:["More solar heat gain, better for cold climates","Less solar heat gain, generally desirable in hot climates","No effect on heat gain","Higher visible light transmittance always"], c:1, e:"Lower SHGC reduces solar heat entering through glazing, helpful in reducing cooling loads in hot climates."},
+{t:"Green Rating Systems", q:"VLT in glazing specifications refers to:", o:["Vertical Load Transfer","Visible Light Transmittance","Ventilation Load Threshold","Variable Lighting Technique"], c:1, e:"VLT (Visible Light Transmittance) indicates how much visible light passes through the glazing."},
+{t:"Green Rating Systems", q:"LPD, as used in ECBC, stands for:", o:["Light Pollution Density","Lighting Power Density","Low Power Design","Local Power Distribution"], c:1, e:"LPD (Lighting Power Density, W/m²) is the installed lighting power per unit floor area, capped by ECBC by space type."},
+{t:"Green Rating Systems", q:"RETV, used in Eco-Niwas Samhita, is a composite index for evaluating:", o:["Roof structural strength","Residential envelope thermal transfer performance","Reverberation time","Rainwater efficiency"], c:1, e:"RETV (Residential Envelope Transmittance Value) evaluates overall envelope heat transfer performance including glazing effects."},
+{t:"Green Rating Systems", q:"ECBC applies mandatorily to commercial buildings with a connected load of at least:", o:["50 kW","100 kW","500 kW","10 kW"], c:1, e:"ECBC applicability thresholds are commonly set at a connected load of 100 kW or contract demand of 120 kVA."},
+{t:"Green Rating Systems", q:"The core aim of a 'green building' is to:", o:["Maximize built-up area regardless of impact","Reduce environmental impact over the building's life cycle while improving occupant wellbeing","Use only green-coloured materials","Minimize construction cost only"], c:1, e:"Green buildings aim to reduce overall environmental impact (energy, water, materials, waste) while enhancing occupant health."},
+{t:"Green Rating Systems", q:"ADaRSH, associated with GRIHA, stands for the Association for Development and Research of:", o:["Sustainable Habitats","Solar Housing","Structural Heritage","Smart Highways"], c:0, e:"ADaRSH (Association for Development and Research of Sustainable Habitats) administers GRIHA certification."},
+{t:"Green Rating Systems", q:"Which of the following is NOT a recognized green building rating system?", o:["LEED","BREEAM","GRIHA","NBCE"], c:3, e:"NBCE is not a recognized rating system; LEED, BREEAM and GRIHA are all established green rating systems."},
+{t:"Green Rating Systems", q:"IGBC has historically administered LEED-based certification in India known as:", o:["LEED India","GRIHA-LEED","IGBC Platinum Plus","ECBC-LEED"], c:0, e:"IGBC has been associated with administering LEED India certification alongside its own IGBC rating system."},
+
+// ---------------- THERMAL COMFORT (25) ----------------
+{t:"Thermal Comfort", q:"Thermal comfort is formally defined (per ASHRAE 55) as:", o:["A fixed temperature of 22°C","The condition of mind expressing satisfaction with the thermal environment","Zero humidity in a space","Constant air velocity of 1 m/s"], c:1, e:"ASHRAE 55 defines thermal comfort as a subjective condition of satisfaction with the surrounding thermal environment."},
+{t:"Thermal Comfort", q:"PMV stands for:", o:["Predicted Mean Vote","Personal Metabolic Value","Peak Moisture Variation","Passive Mechanical Ventilation"], c:0, e:"PMV (Predicted Mean Vote) predicts the average thermal sensation of a large group of occupants."},
+{t:"Thermal Comfort", q:"The PMV scale typically ranges from:", o:["0 to 10","-3 (cold) to +3 (hot)","-1 to +1","0 to 100"], c:1, e:"PMV uses a 7-point scale from -3 (cold) through 0 (neutral) to +3 (hot)."},
+{t:"Thermal Comfort", q:"PPD stands for:", o:["Predicted Percentage of Dissatisfied","Peak Power Demand","Personal Preference Data","Passive Performance Design"], c:0, e:"PPD (Predicted Percentage of Dissatisfied) estimates the percentage of occupants likely to feel thermally uncomfortable."},
+{t:"Thermal Comfort", q:"The PMV/PPD thermal comfort model was developed by:", o:["Victor Olgyay","Baruch Givoni","P.O. Fanger","Wallace Sabine"], c:2, e:"P.O. Fanger developed the PMV/PPD model widely used in thermal comfort standards."},
+{t:"Thermal Comfort", q:"The 'clo' unit is used to measure:", o:["Air velocity","Clothing insulation","Metabolic rate","Relative humidity"], c:1, e:"Clo is the standard unit quantifying the thermal insulation provided by clothing."},
+{t:"Thermal Comfort", q:"The 'met' unit is used to measure:", o:["Metabolic rate (activity level)","Material emissivity","Mean radiant temperature","Moisture content"], c:0, e:"Met is the unit for metabolic rate, reflecting the heat generated by the body based on activity level."},
+{t:"Thermal Comfort", q:"The bioclimatic chart, a key tool relating climate to comfort and design strategy, was developed by:", o:["P.O. Fanger","Victor Olgyay","Le Corbusier","Wallace Sabine"], c:1, e:"Victor Olgyay developed the bioclimatic chart plotting temperature vs humidity to guide passive design strategies."},
+{t:"Thermal Comfort", q:"Givoni's Building Bioclimatic Chart is primarily used to:", o:["Calculate structural loads","Identify comfort zones and passive building design strategies","Measure sound absorption","Design lighting fixtures"], c:1, e:"Baruch Givoni's chart identifies comfort zones and recommends specific building strategies (ventilation, mass, evaporative cooling, etc.)."},
+{t:"Thermal Comfort", q:"'Effective Temperature' as a comfort index combines:", o:["Temperature and humidity","Temperature and sound level","Humidity and lighting","Air velocity and lighting"], c:0, e:"Effective Temperature combines air temperature and humidity into a single perceived-warmth index."},
+{t:"Thermal Comfort", q:"Conduction is best described as:", o:["Heat transfer through a solid material","Heat transfer via fluid movement","Heat transfer via electromagnetic waves","Heat loss through evaporation"], c:0, e:"Conduction is the transfer of heat through direct contact within or between solid materials."},
+{t:"Thermal Comfort", q:"Convection is best described as:", o:["Heat transfer through solids only","Heat transfer via movement of a fluid (air/water)","Heat transfer requiring no medium","Heat transfer via moisture evaporation"], c:1, e:"Convection transfers heat through the bulk movement of a fluid, such as air currents."},
+{t:"Thermal Comfort", q:"Radiation, as a mode of heat transfer, requires:", o:["A solid medium","A liquid medium","No medium at all","Only convective air currents"], c:2, e:"Radiant heat transfer occurs via electromagnetic waves and can travel through a vacuum, needing no medium."},
+{t:"Thermal Comfort", q:"Evaporative heat loss from the human body (or a wet surface) relies on:", o:["Conduction only","Latent heat absorbed during evaporation of moisture","Radiation only","Convection only"], c:1, e:"Evaporation absorbs latent heat from the surrounding surface/air, producing a cooling effect."},
+{t:"Thermal Comfort", q:"'Mean Radiant Temperature' refers to:", o:["The average temperature of the outdoor air","The average radiant temperature of surrounding surfaces as experienced by an occupant","The temperature of a single hottest surface only","The dew point temperature"], c:1, e:"Mean radiant temperature represents the combined radiant effect of all surrounding surfaces on a person."},
+{t:"Thermal Comfort", q:"Relative humidity primarily affects thermal comfort by influencing:", o:["Radiant heat gain","The rate of evaporative heat loss from the body","Conductive heat transfer only","Air pressure"], c:1, e:"Higher humidity reduces the body's ability to lose heat via sweat evaporation, affecting comfort."},
+{t:"Thermal Comfort", q:"Increased air velocity mainly improves comfort in warm conditions through:", o:["Increased radiant heating","Enhanced convective and evaporative heat loss","Reduced humidity directly","Increased mean radiant temperature"], c:1, e:"Air movement increases both convective heat loss and the evaporation rate of sweat, aiding cooling."},
+{t:"Thermal Comfort", q:"A PMV value of 0 corresponds to:", o:["Extremely cold sensation","Neutral thermal sensation","Extremely hot sensation","Undefined sensation"], c:1, e:"PMV = 0 represents thermal neutrality — neither warm nor cold sensation on average."},
+{t:"Thermal Comfort", q:"A higher clo value for clothing generally provides:", o:["Less insulation, feeling cooler","More insulation, feeling warmer","No effect on comfort","Only affects appearance"], c:1, e:"Higher clo values indicate thicker/more insulating clothing, which retains more body heat."},
+{t:"Thermal Comfort", q:"The metabolic rate for quiet, seated (sedentary) activity is approximately:", o:["0.1 met","1.0 met","5.0 met","10 met"], c:1, e:"Sedentary activities like sitting quietly correspond to roughly 1.0 met."},
+{t:"Thermal Comfort", q:"The dominant heat transfer mode responsible for solar heat gain through a window is:", o:["Conduction","Convection","Radiation","Evaporation"], c:2, e:"Solar radiation reaches and passes through glazing primarily via radiative heat transfer."},
+{t:"Thermal Comfort", q:"In warm & humid climates, increasing indoor air velocity helps comfort mainly via:", o:["Reduced radiant temperature only","Enhanced convective and evaporative cooling of occupants","Increased humidity","Reduced metabolic rate"], c:1, e:"Air movement enhances both convective cooling and sweat evaporation, key comfort strategies in humid climates."},
+{t:"Thermal Comfort", q:"Even at the thermally 'neutral' PMV of 0, the predicted percentage of dissatisfied (PPD) is approximately:", o:["0%","5%","25%","50%"], c:1, e:"Due to individual variation, PPD never reaches zero — at PMV=0, PPD is approximately 5%."},
+{t:"Thermal Comfort", q:"The two primary axes of Olgyay's bioclimatic chart are:", o:["Pressure and altitude","Temperature and relative humidity","Sound level and frequency","Illuminance and CCT"], c:1, e:"Olgyay's bioclimatic chart plots dry-bulb temperature against relative humidity to define comfort zones."},
+{t:"Thermal Comfort", q:"The thermal comfort zone for a given individual shifts depending mainly on:", o:["Building material colour only","Clothing (clo) and activity/metabolic rate (met)","Building height","Roof shape"], c:1, e:"Personal factors — clothing insulation and metabolic rate — significantly shift an individual's comfort zone."},
+
+// ---------------- SOLAR ARCHITECTURE (25) ----------------
+{t:"Solar Architecture", q:"Passive solar design achieves heating and cooling primarily:", o:["Using large mechanical equipment","Without mechanical equipment, using building elements","Using only photovoltaic panels","Through artificial lighting"], c:1, e:"Passive solar strategies rely on building form, orientation and materials rather than mechanical systems."},
+{t:"Solar Architecture", q:"A 'direct gain' passive solar heating system works by:", o:["Storing heat in a separate sunspace","Sunlight entering directly through glazing and being absorbed by interior thermal mass","Using only a Trombe wall","Blocking all direct sunlight"], c:1, e:"In direct gain systems, sunlight enters through south-facing glazing and heats interior mass (floor/walls) directly."},
+{t:"Solar Architecture", q:"A Trombe wall is classified as which type of passive solar system?", o:["Direct gain","Indirect gain","Isolated gain","Active gain"], c:1, e:"A Trombe wall stores and releases solar heat indirectly to the interior — an indirect gain system."},
+{t:"Solar Architecture", q:"A Trombe wall's outer surface (behind glazing) is typically:", o:["White and reflective","Dark-coloured and absorptive","Made of glass only","Insulated with no mass"], c:1, e:"Trombe walls use a dark, massive surface to maximize solar absorption behind the glazing."},
+{t:"Solar Architecture", q:"Vents at the top and bottom of a Trombe wall allow:", o:["Water drainage","Convective air circulation into the room","Electrical wiring","Structural movement"], c:1, e:"Top and bottom vents allow warmed air to circulate into the living space by natural convection."},
+{t:"Solar Architecture", q:"A sunspace or attached greenhouse is an example of:", o:["Direct gain system","Indirect gain system","Isolated gain system","Active solar system"], c:2, e:"A sunspace is a separate glazed space (isolated from the main living area) that collects heat later transferred inward."},
+{t:"Solar Architecture", q:"'Solar altitude' refers to:", o:["The horizontal angle of the sun from north","The angle of the sun above the horizon","The distance from earth to sun","The building's height above sea level"], c:1, e:"Solar altitude is the vertical angle of the sun above the horizon at a given time and location."},
+{t:"Solar Architecture", q:"'Solar azimuth' refers to:", o:["The angle of the sun above the horizon","The horizontal angular position of the sun from true north/south","The building's roof slope","The window's U-value"], c:1, e:"Solar azimuth is the compass direction (horizontal angle) of the sun's position."},
+{t:"Solar Architecture", q:"Radiative cooling as a passive cooling strategy relies on:", o:["Absorbing solar radiation during the day","Heat loss to the night sky via long-wave radiation","Mechanical refrigeration","Evaporation of water only"], c:1, e:"Radiative cooling uses the temperature difference with the clear night sky to lose heat via radiation, e.g. in roof ponds."},
+{t:"Solar Architecture", q:"Earth-sheltered/earth-coupled construction benefits from:", o:["Higher surface temperature fluctuation","The relatively stable temperature of the ground at depth","Increased solar exposure","Reduced structural stability"], c:1, e:"Ground temperature at depth remains fairly stable, moderating indoor temperature swings in earth-sheltered buildings."},
+{t:"Solar Architecture", q:"BIPV stands for:", o:["Building Integrated Photovoltaics","Basic Insulated PV","Building Independent Power Ventilation","Bureau of Indian Photovoltaic Verification"], c:0, e:"BIPV refers to photovoltaic modules integrated directly into building elements like façades or roofs."},
+{t:"Solar Architecture", q:"Solar water heaters commonly use which two types of collectors?", o:["Flat-plate and evacuated-tube collectors","Parabolic and spherical collectors","Wind and solar hybrid collectors","Photovoltaic and thermoelectric collectors"], c:0, e:"Flat-plate and evacuated-tube collectors are the two most common solar water heater collector types."},
+{t:"Solar Architecture", q:"Photovoltaic (PV) panels function by:", o:["Heating water directly","Converting sunlight directly into electricity","Storing heat in thermal mass","Reflecting solar radiation only"], c:1, e:"PV panels use the photovoltaic effect to convert sunlight directly into electrical energy."},
+{t:"Solar Architecture", q:"Evaporative cooling as a passive strategy typically uses:", o:["Dark absorptive roofs","Water bodies or wetted surfaces to cool incoming air","High thermal mass alone","Reflective glazing alone"], c:1, e:"Evaporative cooling lowers air temperature as water evaporates, commonly using courtyards, fountains, or wetted pads."},
+{t:"Solar Architecture", q:"Shading devices on a building's façade primarily function to:", o:["Increase direct solar radiation indoors","Block unwanted direct solar radiation while allowing daylight/views","Insulate against sound","Increase structural load"], c:1, e:"Shading devices are designed to block direct sun (heat) while still permitting daylight and views."},
+{t:"Solar Architecture", q:"Sun path diagrams are primarily used by architects to:", o:["Calculate structural loads","Determine shading device dimensions and window placement","Design acoustic treatments","Select paint colours"], c:1, e:"Sun path diagrams show the sun's position through the year, guiding shading device sizing and orientation decisions."},
+{t:"Solar Architecture", q:"In the northern hemisphere, passive solar heating glazing is typically oriented facing:", o:["North","South","East only","West only"], c:1, e:"South-facing glazing receives the most consistent and controllable solar exposure for passive heating in the northern hemisphere."},
+{t:"Solar Architecture", q:"In an isolated-gain passive solar system, heat is transferred to adjoining spaces mainly via:", o:["Direct radiation only","Convection and conduction from the isolated space","Mechanical fans always","Photovoltaic conversion"], c:1, e:"Heat collected in an isolated sunspace moves to adjoining rooms through convective air movement and conduction."},
+{t:"Solar Architecture", q:"The time lag effect of a Trombe wall is beneficial because it:", o:["Blocks all heat permanently","Delays the delivery of collected solar heat to evening/night hours","Prevents any heat transfer","Increases daytime overheating"], c:1, e:"The wall's thermal mass delays heat release, providing warmth into the evening after the sun has set."},
+{t:"Solar Architecture", q:"Evacuated tube solar collectors are generally preferred over flat-plate collectors for:", o:["Lower cost only","Higher efficiency, especially in cooler or cloudy conditions","Aesthetic reasons only","Lower durability"], c:1, e:"Evacuated tube collectors reduce heat loss and perform better in cold or diffuse-light conditions than flat-plate types."},
+{t:"Solar Architecture", q:"Roof ponds are a passive strategy primarily used for:", o:["Structural reinforcement","Radiative and evaporative cooling","Increasing embodied energy","Improving acoustic performance"], c:1, e:"Roof ponds use water's thermal mass along with radiative/evaporative heat loss (often with movable insulation) for cooling."},
+{t:"Solar Architecture", q:"Stack ventilation relies on which physical principle?", o:["Wind pressure differences only","Buoyancy-driven air movement due to temperature differences","Mechanical fan-forced flow","Evaporative cooling only"], c:1, e:"Stack ventilation uses the natural buoyancy of warm air rising and escaping through high openings, drawing in cooler air below."},
+{t:"Solar Architecture", q:"Effective cross ventilation in a building requires:", o:["Openings only on one wall","Openings on opposite (or near-opposite) walls allowing airflow through","Fully sealed façades","No windows at all"], c:1, e:"Cross ventilation needs inlet and outlet openings on different walls to allow air to flow through the space."},
+{t:"Solar Architecture", q:"A solar chimney enhances natural ventilation by exploiting the:", o:["Venturi effect only","Stack effect (buoyancy of heated air)","Coriolis effect","Doppler effect"], c:1, e:"Solar chimneys heat air to rise and exit at the top, drawing fresh air in and enhancing the stack effect."},
+{t:"Solar Architecture", q:"BIPV systems are typically integrated into which building elements?", o:["Only underground foundations","Façades, roofing, and skylights","Interior partition walls only","Structural columns only"], c:1, e:"BIPV modules serve a dual function as both building envelope material (façade/roof/skylight) and power generator."},
+
+// ---------------- LIGHTING & ILLUMINATION (25) ----------------
+{t:"Lighting & Illumination", q:"The unit of luminous flux is the:", o:["Lux","Lumen","Candela","Kelvin"], c:1, e:"Luminous flux, the total light output of a source, is measured in lumens."},
+{t:"Lighting & Illumination", q:"Illuminance, the light falling on a surface, is measured in:", o:["Lumens","Candela","Lux","Watts"], c:2, e:"Illuminance is measured in lux (lumens per square metre) and is used to specify task lighting levels."},
+{t:"Lighting & Illumination", q:"Luminous intensity, describing flux emitted in a specific direction, is measured in:", o:["Lux","Candela","Lumen","Kelvin"], c:1, e:"Luminous intensity in a given direction is measured in candela."},
+{t:"Lighting & Illumination", q:"Luminance, describing the brightness of a surface as perceived by the eye, is measured in:", o:["Lux","Lumen","cd/m²","Watts/m²"], c:2, e:"Luminance is expressed in candela per square metre (cd/m²)."},
+{t:"Lighting & Illumination", q:"CRI (Color Rendering Index) measures:", o:["The intensity of a light source","How accurately a light source renders colours compared to natural light","The colour temperature in Kelvin","The efficiency of a lamp in lm/W"], c:1, e:"CRI, on a 0-100 scale, indicates how faithfully colours appear under a given light source compared to a reference."},
+{t:"Lighting & Illumination", q:"CCT (Correlated Color Temperature) describes:", o:["The efficiency of a light fixture","The warmth or coolness appearance of light, measured in Kelvin","The lumen output of a lamp","The glare index"], c:1, e:"CCT describes whether light appears warm (yellowish) or cool (bluish-white), measured in Kelvin."},
+{t:"Lighting & Illumination", q:"'Warm white' light typically has a CCT range of approximately:", o:["2700K–3000K","5000K–6500K","1000K–1500K","8000K–10000K"], c:0, e:"Warm white light, similar to incandescent lamps, falls in the roughly 2700K–3000K range."},
+{t:"Lighting & Illumination", q:"'Cool/daylight white' light typically has a CCT range of approximately:", o:["1500K–2000K","2700K–3000K","5000K–6500K","500K–1000K"], c:2, e:"Cool/daylight white light corresponds to a higher CCT range of roughly 5000K–6500K."},
+{t:"Lighting & Illumination", q:"'Disability glare' refers to glare that:", o:["Only causes mild annoyance","Actually impairs visual performance/visibility","Has no effect on vision","Only occurs outdoors"], c:1, e:"Disability glare is severe enough to directly reduce visual performance, unlike milder discomfort glare."},
+{t:"Lighting & Illumination", q:"General (ambient) lighting is best described as:", o:["Focused light for a specific task","Uniform overall illumination of a space","Light used only to highlight artwork","Light used exclusively outdoors"], c:1, e:"General/ambient lighting provides overall, relatively uniform illumination across a space."},
+{t:"Lighting & Illumination", q:"Task lighting is designed to:", o:["Illuminate the entire building uniformly","Provide focused light for specific activities like reading or working","Only highlight decorative features","Replace daylight entirely"], c:1, e:"Task lighting delivers higher, focused illuminance for specific visual tasks."},
+{t:"Lighting & Illumination", q:"Accent lighting is primarily used to:", o:["Provide uniform ambient light","Highlight architectural features or artwork","Illuminate task surfaces only","Reduce glare only"], c:1, e:"Accent lighting draws attention to specific features, artwork, or architectural elements."},
+{t:"Lighting & Illumination", q:"Indirect lighting is characterized by:", o:["Light directed straight onto the task surface","Light reflected off ceiling/walls before reaching the space, producing diffuse illumination","No use of luminaires","Only outdoor application"], c:1, e:"Indirect lighting bounces off surfaces like the ceiling, producing softer, more diffused illumination."},
+{t:"Lighting & Illumination", q:"Cove lighting is a technique where the light source is:", o:["Fully exposed on the ceiling","Concealed within a recess, often illuminating the ceiling indirectly","Placed outdoors only","Used only for task lighting"], c:1, e:"Cove lighting conceals the light source in a ledge or recess, typically directing light upward onto the ceiling."},
+{t:"Lighting & Illumination", q:"Sidelighting in daylighting design refers to:", o:["Light entering through roof skylights","Light entering through windows on vertical walls","Light from artificial fixtures only","Light entering through the floor"], c:1, e:"Sidelighting uses vertical wall windows as the primary source of daylight into a space."},
+{t:"Lighting & Illumination", q:"Which of the following is an example of toplighting?", o:["A standard vertical window","A skylight or clerestory","A wall-mounted sconce","A floor lamp"], c:1, e:"Toplighting includes skylights, roof monitors, and clerestories that admit daylight from above."},
+{t:"Lighting & Illumination", q:"A 'light shelf' functions to:", o:["Block all daylight from entering","Reflect daylight deeper into a room while shading the area near the window","Only support structural loads","Increase glare near windows"], c:1, e:"Light shelves bounce daylight further into a room's interior while shading the zone directly near the window."},
+{t:"Lighting & Illumination", q:"'Daylight factor' is defined as:", o:["The ratio of indoor to outdoor illuminance under overcast sky conditions, expressed as a percentage","The total lumens produced by a fixture","The colour temperature of daylight","The glare rating of a window"], c:0, e:"Daylight factor compares interior illuminance to unobstructed exterior illuminance under standard overcast sky, as a percentage."},
+{t:"Lighting & Illumination", q:"LED lamps typically have a luminous efficacy of approximately:", o:["10–17 lm/W","50–70 lm/W","80–150 lm/W","200–300 lm/W"], c:2, e:"LEDs are highly efficient, typically producing 80–150 lumens per watt, far more than incandescent or CFL sources."},
+{t:"Lighting & Illumination", q:"Incandescent lamps typically have a luminous efficacy of approximately:", o:["10–17 lm/W","80–150 lm/W","200 lm/W","500 lm/W"], c:0, e:"Incandescent lamps are inefficient, producing only about 10–17 lumens per watt."},
+{t:"Lighting & Illumination", q:"A typical recommended illuminance level for office desk tasks is approximately:", o:["10–20 lux","50–100 lux","300–500 lux","2000–3000 lux"], c:2, e:"Office desk/task areas are typically designed for 300–500 lux illuminance."},
+{t:"Lighting & Illumination", q:"Semi-direct lighting distribution refers to a fixture that:", o:["Emits light entirely upward only","Emits most light downward with some upward component to soften shadows","Emits no visible light","Is used only outdoors"], c:1, e:"Semi-direct luminaires direct most light downward while releasing a smaller portion upward, softening harsh shadows."},
+{t:"Lighting & Illumination", q:"Clerestory windows are placed high on a wall primarily to provide:", o:["Ground-level views","High-level daylight penetration and ventilation without loss of privacy","Structural support","Acoustic isolation"], c:1, e:"Clerestories admit daylight (and often ventilation) from high openings while maintaining privacy at eye level."},
+{t:"Lighting & Illumination", q:"Valance lighting typically conceals its light source:", o:["Beneath a floor","Above windows or along a wall, directing light up and/or down","Inside a ceiling fan","Underground"], c:1, e:"Valance lighting hides fixtures behind a horizontal board, often above windows, washing light up the wall/ceiling and down."},
+{t:"Lighting & Illumination", q:"Direct lighting distribution refers to a fixture that:", o:["Directs nearly all light downward onto the task/surface","Directs all light upward toward the ceiling only","Emits no measurable light output","Is used exclusively for accent lighting"], c:0, e:"Direct luminaires concentrate most of their output downward onto the working plane, maximizing efficiency but risking harsher shadows."},
+
+// ---------------- ARCHITECTURAL ACOUSTICS (25) ----------------
+{t:"Architectural Acoustics", q:"The typical audible frequency range for humans is:", o:["2 Hz – 200 Hz","20 Hz – 20,000 Hz","200 Hz – 2,000 Hz","20,000 Hz – 200,000 Hz"], c:1, e:"Human hearing typically spans approximately 20 Hz to 20 kHz (20,000 Hz)."},
+{t:"Architectural Acoustics", q:"Sound Pressure Level (loudness) is measured in:", o:["Hertz","Decibels (dB)","Lux","Sabins"], c:1, e:"Sound Pressure Level is expressed logarithmically in decibels (dB)."},
+{t:"Architectural Acoustics", q:"Reverberation Time (RT60) is defined as the time for sound to:", o:["Travel across a room","Decay by 60 decibels after the source stops","Reach peak loudness","Reflect once off a wall"], c:1, e:"RT60 is the time required for a sound's level to drop by 60 dB after the source is switched off."},
+{t:"Architectural Acoustics", q:"Sabine's formula for reverberation time is given as:", o:["RT = 0.161V/A","RT = V/A²","RT = A/V","RT = 0.161A/V"], c:0, e:"Sabine's formula: RT = 0.161V/A, where V is room volume (m³) and A is total absorption (sabins/m²)."},
+{t:"Architectural Acoustics", q:"Sabine's reverberation formula is named after which scientist, considered the father of architectural acoustics?", o:["Lord Rayleigh","Wallace Clement Sabine","P.O. Fanger","Victor Olgyay"], c:1, e:"Wallace Clement Sabine pioneered the field of architectural acoustics and developed the reverberation time formula."},
+{t:"Architectural Acoustics", q:"An 'echo' is defined as:", o:["Continuous background noise","A distinct, separately perceived repetition of a sound due to a delayed reflection","The absence of sound","Resonance at a single frequency"], c:1, e:"An echo occurs when a reflected sound arrives late enough (typically >1/17 second delay) to be heard as a separate, distinct repeat."},
+{t:"Architectural Acoustics", q:"Excessive reverberation time in a room primarily causes:", o:["Improved speech intelligibility","Reduced speech intelligibility due to sound overlap","No effect on speech clarity","Complete silence"], c:1, e:"Too much reverberation causes successive sounds/syllables to overlap, reducing speech clarity."},
+{t:"Architectural Acoustics", q:"Sound focusing, an acoustic defect causing uneven sound distribution, is typically caused by:", o:["Flat wall surfaces","Concave surfaces concentrating reflected sound at a point","Fully absorptive surfaces","Convex diffusing surfaces"], c:1, e:"Concave surfaces reflect and concentrate sound waves toward a focal point, creating uneven loudness distribution."},
+{t:"Architectural Acoustics", q:"'Dead spots' in a room's acoustics refer to areas with:", o:["Excessive loudness","Insufficient sound due to interference or absorption","Perfect sound clarity","No acoustic issues"], c:1, e:"Dead spots are locations where sound is inadequately weak due to destructive interference or excessive local absorption."},
+{t:"Architectural Acoustics", q:"Acoustic 'resonance' in a room occurs when:", o:["All sound is absorbed","Sound is reinforced at frequencies matching the room's natural frequency","No sound reflection occurs","Only high frequencies are audible"], c:1, e:"Resonance amplifies specific frequencies that coincide with a room's natural (modal) frequencies."},
+{t:"Architectural Acoustics", q:"STC (Sound Transmission Class) rates:", o:["A material's light reflectance","How well a building partition attenuates airborne sound transmission","The reverberation time of a hall","The metabolic rate of occupants"], c:1, e:"STC rates a wall, floor, or door assembly's ability to block airborne sound transmission — higher STC means better isolation."},
+{t:"Architectural Acoustics", q:"IIC (Impact Insulation Class) specifically rates:", o:["Airborne sound transmission","Structure-borne/impact noise transmission (e.g., footsteps through floors)","Daylight transmission","Thermal transmittance"], c:1, e:"IIC measures how well a floor-ceiling assembly resists transmitting impact noise like footsteps."},
+{t:"Architectural Acoustics", q:"NRC (Noise Reduction Coefficient) represents:", o:["The average sound absorption coefficient of a material across test frequencies","The peak frequency a material can block","The reverberation time of a space","The decibel level of ambient noise"], c:0, e:"NRC is the average sound absorption coefficient across standard frequencies, ranging from 0 (fully reflective) to 1 (fully absorptive)."},
+{t:"Architectural Acoustics", q:"A higher STC rating for a partition indicates:", o:["Poorer sound isolation","Better sound isolation","Higher reverberation time","Lower thermal performance"], c:1, e:"Higher STC values mean the partition blocks more airborne sound, providing better acoustic isolation."},
+{t:"Architectural Acoustics", q:"A material with an NRC value of 1.0 is considered:", o:["Fully reflective","Fully absorptive","Partially transparent","Fully transmissive"], c:1, e:"An NRC of 1.0 indicates the material absorbs essentially all incident sound energy across the tested frequencies."},
+{t:"Architectural Acoustics", q:"Convex surfaces in a room are used acoustically to:", o:["Focus sound to a point","Diffuse/scatter sound waves, avoiding focusing defects","Absorb all sound","Increase reverberation time drastically"], c:1, e:"Convex surfaces scatter sound waves in multiple directions, helping avoid the sound-focusing defect of concave surfaces."},
+{t:"Architectural Acoustics", q:"Parallel reflective walls in a room commonly cause which acoustic defect?", o:["Improved clarity","Flutter echo","Zero reverberation","Perfect diffusion"], c:1, e:"Sound bouncing repeatedly between parallel hard walls produces a rapid series of echoes known as flutter echo."},
+{t:"Architectural Acoustics", q:"A sound lock or acoustic lobby is primarily used to:", o:["Increase reverberation in a hall","Act as a buffer zone reducing noise transfer between spaces","Improve daylighting","Increase glare"], c:1, e:"Sound locks are transition spaces (often with two doors) that reduce noise transmission between two areas, e.g., into an auditorium."},
+{t:"Architectural Acoustics", q:"Compared to a classroom, a concert hall generally requires:", o:["A shorter optimal reverberation time","A longer optimal reverberation time","No reverberation control at all","Identical RT to a classroom"], c:1, e:"Concert halls benefit from a longer RT to enrich musical tone, whereas classrooms need shorter RT for speech clarity."},
+{t:"Architectural Acoustics", q:"Classrooms and lecture halls generally require reverberation times that are:", o:["Very long, for musical richness","Relatively short, for clear speech intelligibility","Zero, with no reflections at all","Identical to concert halls"], c:1, e:"Speech-focused spaces like classrooms need shorter RT to keep spoken words distinct and intelligible."},
+{t:"Architectural Acoustics", q:"Sound absorption coefficients used in Sabine's formula are typically expressed in units of:", o:["Decibels","Sabins per square metre","Lux","Watts per metre"], c:1, e:"Absorption is quantified in sabins (per m²), representing the equivalent area of a perfectly absorptive surface."},
+{t:"Architectural Acoustics", q:"Wavelength of sound is related to frequency as follows:", o:["Directly proportional","Inversely proportional","No relationship exists","Equal in all cases"], c:1, e:"Wavelength and frequency are inversely related — higher frequency sounds have shorter wavelengths (at a constant speed of sound)."},
+{t:"Architectural Acoustics", q:"Vegetation and earth berms used along a site boundary primarily help control:", o:["Indoor lighting levels","External noise from traffic or other sources","Structural loads","Thermal comfort exclusively"], c:1, e:"Vegetation buffers and earth berms help attenuate and deflect external noise before it reaches a building."},
+{t:"Architectural Acoustics", q:"Resilient mounts used in floor/wall construction are primarily intended to reduce:", o:["Airborne sound only","Structure-borne (impact) noise transmission","Solar heat gain","Daylight glare"], c:1, e:"Resilient mounts isolate structural elements, reducing the transmission of impact-generated vibrations and noise."},
+{t:"Architectural Acoustics", q:"A double-wall construction with an air gap generally improves:", o:["U-value only","Sound insulation (STC) between spaces","Daylight factor","Fire rating exclusively"], c:1, e:"An air gap between two separate wall leaves decouples structural vibration paths, improving airborne sound insulation (STC)."},
+
+// ---------------- ENVIRONMENTAL POLLUTION CONTROL (25) ----------------
+{t:"Environmental Pollution", q:"The Environment (Protection) Act in India was enacted in the year:", o:["1974","1981","1986","2006"], c:2, e:"The Environment (Protection) Act, a key umbrella legislation for environmental regulation, was enacted in 1986."},
+{t:"Environmental Pollution", q:"The Air (Prevention and Control of Pollution) Act was enacted in:", o:["1974","1981","1986","1992"], c:1, e:"The Air Act was enacted in 1981 to address and control air pollution in India."},
+{t:"Environmental Pollution", q:"The Water (Prevention and Control of Pollution) Act was enacted in:", o:["1974","1981","1986","2000"], c:0, e:"The Water Act, one of India's earliest environmental laws, was enacted in 1974."},
+{t:"Environmental Pollution", q:"The Environmental Impact Assessment (EIA) Notification currently in force in India was issued in:", o:["1986","1994","2006","2015"], c:2, e:"The EIA Notification of 2006 governs mandatory environmental clearance for large projects in India."},
+{t:"Environmental Pollution", q:"CPCB stands for:", o:["Central Pollution Control Board","City Planning and Conservation Bureau","Construction Pollution Control Body","Central Public Construction Board"], c:0, e:"CPCB (Central Pollution Control Board) is India's apex body for pollution control and monitoring."},
+{t:"Environmental Pollution", q:"SPCB refers to:", o:["State Pollution Control Board","Structural Planning and Coordination Body","Site Pollution Control Bureau","Standard Public Construction Board"], c:0, e:"SPCBs (State Pollution Control Boards) enforce pollution control regulations at the state level."},
+{t:"Environmental Pollution", q:"Which of the following is a well-known example of an ozone-depleting substance (ODS)?", o:["Carbon dioxide","Chlorofluorocarbons (CFCs)","Nitrogen gas","Oxygen"], c:1, e:"CFCs (used historically in refrigerants) are well-known ozone-depleting substances."},
+{t:"Environmental Pollution", q:"The Montreal Protocol is an international agreement primarily aimed at:", o:["Reducing carbon emissions from vehicles","Phasing out ozone-depleting substances","Regulating water pollution","Controlling noise pollution"], c:1, e:"The Montreal Protocol specifically targets the phase-out of substances that deplete the ozone layer."},
+{t:"Environmental Pollution", q:"VOCs (Volatile Organic Compounds), a major indoor air pollutant, are commonly found in:", o:["Natural stone only","Paints, adhesives and furnishings","Pure water","Untreated timber only"], c:1, e:"VOCs off-gas from many finishing materials such as paints, adhesives, and synthetic furnishings, degrading indoor air quality."},
+{t:"Environmental Pollution", q:"Rainwater harvesting on a building site primarily helps by:", o:["Increasing surface runoff","Reducing runoff and recharging groundwater","Increasing water pollution","Eliminating the need for a water supply entirely"], c:1, e:"Rainwater harvesting captures and stores/recharges rainfall, reducing runoff and replenishing groundwater."},
+{t:"Environmental Pollution", q:"SUDS stands for:", o:["Sustainable Urban Drainage Systems","Structural Underground Design Standards","Solar Utility Distribution System","Site Utility Development Scheme"], c:0, e:"SUDS (Sustainable Urban Drainage Systems) manage stormwater sustainably, mimicking natural drainage patterns."},
+{t:"Environmental Pollution", q:"STP, commonly required in green building water management, stands for:", o:["Site Traffic Plan","Sewage Treatment Plant","Stormwater Transfer Pipe","Standard Testing Procedure"], c:1, e:"A Sewage Treatment Plant (STP) treats wastewater on-site, often enabling reuse for flushing or landscaping."},
+{t:"Environmental Pollution", q:"The '3Rs' of sustainable waste management stand for:", o:["Reduce, Reuse, Recycle","Repair, Rebuild, Remove","Renew, Restore, Return","Reduce, Remove, Replace"], c:0, e:"The 3Rs — Reduce, Reuse, Recycle — form the foundation of sustainable solid waste management."},
+{t:"Environmental Pollution", q:"Using fly ash bricks instead of conventional clay bricks primarily helps reduce:", o:["Structural strength","Embodied energy and industrial waste","Thermal comfort","Water consumption during use"], c:1, e:"Fly ash bricks utilize industrial by-products, reducing waste and often lowering embodied energy compared to conventional bricks."},
+{t:"Environmental Pollution", q:"Permeable paving is used on-site primarily to:", o:["Increase surface runoff","Reduce stormwater runoff by allowing infiltration","Increase heat island effect","Block groundwater recharge"], c:1, e:"Permeable paving allows rainwater to infiltrate the ground, reducing runoff volume and aiding groundwater recharge."},
+{t:"Environmental Pollution", q:"Light pollution is primarily caused by:", o:["Excessive or misdirected artificial outdoor lighting","Excess daylight in interiors","Solar reflectance of building materials","Underground lighting fixtures"], c:0, e:"Poorly designed or excessive outdoor lighting scatters light upward and outward, causing light pollution affecting sky visibility and ecosystems."},
+{t:"Environmental Pollution", q:"A major cause of indoor air pollution in newly finished buildings is:", o:["Excess daylight","VOC off-gassing from finishes combined with poor ventilation","Excess natural ventilation","Use of natural stone flooring"], c:1, e:"VOC emissions from new paints, adhesives, and furnishings, combined with inadequate ventilation, degrade indoor air quality."},
+{t:"Environmental Pollution", q:"'Embodied energy' of a building material refers to the energy consumed in:", o:["Operating the building after construction","Extraction, manufacturing and transport of the material","Demolishing the building","Occupant activities only"], c:1, e:"Embodied energy accounts for all energy used to produce and deliver a material, prior to its use in the building."},
+{t:"Environmental Pollution", q:"'C&D waste' refers to:", o:["Chemical & Detergent waste","Construction & Demolition waste","Cooling & Distribution waste","Carbon & Dust waste"], c:1, e:"C&D (Construction & Demolition) waste includes debris generated during building construction, renovation, or demolition."},
+{t:"Environmental Pollution", q:"MERV ratings are used to evaluate the performance of:", o:["Solar panels","Air filters in HVAC systems","Acoustic wall panels","Water filtration membranes"], c:1, e:"MERV (Minimum Efficiency Reporting Value) rates how effectively an HVAC air filter captures particles."},
+{t:"Environmental Pollution", q:"A 'zero discharge' wastewater system aims to:", o:["Maximize untreated effluent release","Eliminate the release of untreated wastewater into the environment","Increase groundwater contamination","Bypass treatment entirely"], c:1, e:"Zero discharge systems treat and reuse all wastewater on-site, preventing any untreated effluent release."},
+{t:"Environmental Pollution", q:"In urban areas, the most significant source of ambient noise pollution is typically:", o:["Vegetation","Traffic","Rainfall","Daylight"], c:1, e:"Vehicular traffic is generally the dominant contributor to urban ambient noise pollution."},
+{t:"Environmental Pollution", q:"As per the EIA Notification, environmental clearance is mandatory for:", o:["All buildings regardless of size","Large construction/township projects above specified thresholds","Only government buildings","Only residential bungalows"], c:1, e:"EIA clearance is required for large construction and township projects that exceed specified built-up area or capacity thresholds."},
+{t:"Environmental Pollution", q:"Using locally sourced materials in construction primarily helps reduce:", o:["Structural loads","Transport-related embodied energy and emissions","Water consumption directly","Acoustic performance"], c:1, e:"Local materials minimize transportation distances, reducing the associated embodied energy and carbon emissions."},
+{t:"Environmental Pollution", q:"Land/soil pollution on construction sites is most commonly caused by:", o:["Excess daylight","Improper disposal of construction & demolition (C&D) waste","Excess ventilation","Use of light-coloured paints"], c:1, e:"Improperly disposed C&D waste is a leading cause of land and soil pollution associated with building projects."}
+];
+
+// ---------------- APP LOGIC ----------------
+const STORAGE_KEY = "ecgb_mcq_progress_v1";
+let state = { order: QUESTIONS.map((_, i) => i), current: 0, answers: {}, theme: "light", filterTopic: "all", unansweredOnly: false };
+
+function loadState() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    if (saved) state = Object.assign(state, saved);
+  } catch (e) {}
+  document.documentElement.setAttribute("data-theme", state.theme);
+  document.getElementById("themeToggle").textContent = state.theme === "dark" ? "☀️ Light" : "🌙 Dark";
+}
+function saveState() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+}
+
+function getTopics() {
+  return ["all", ...Array.from(new Set(QUESTIONS.map(q => q.t)))];
+}
+function populateTopicFilter() {
+  const sel = document.getElementById("topicFilter");
+  sel.innerHTML = "";
+  getTopics().forEach(t => {
+    const opt = document.createElement("option");
+    opt.value = t;
+    opt.textContent = t === "all" ? "All Topics" : t;
+    if (t === state.filterTopic) opt.selected = true;
+    sel.appendChild(opt);
+  });
+}
+
+function getVisibleOrder() {
+  let order = state.order.filter(i => state.filterTopic === "all" || QUESTIONS[i].t === state.filterTopic);
+  if (state.unansweredOnly) order = order.filter(i => state.answers[i] === undefined);
+  return order;
+}
+
+function renderQuestion() {
+  const visible = getVisibleOrder();
+  if (visible.length === 0) {
+    document.getElementById("questionText").textContent = "No questions match this filter.";
+    document.getElementById("optionsContainer").innerHTML = "";
+    document.getElementById("topicTag").textContent = "-";
+    document.getElementById("qnum").textContent = "";
+    document.getElementById("explanation").className = "explanation";
+    updateStats(visible);
+    return;
+  }
+  if (state.current >= visible.length) state.current = 0;
+  const idx = visible[state.current];
+  const q = QUESTIONS[idx];
+
+  document.getElementById("topicTag").textContent = q.t;
+  document.getElementById("qnum").textContent = "Question " + (state.current + 1) + " of " + visible.length + " (Overall #" + (idx + 1) + ")";
+  document.getElementById("questionText").textContent = q.q;
+
+  const container = document.getElementById("optionsContainer");
+  container.innerHTML = "";
+  const answered = state.answers[idx];
+
+  q.o.forEach((optText, i) => {
+    const btn = document.createElement("button");
+    btn.className = "option";
+    btn.textContent = optText;
+    if (answered !== undefined) {
+      btn.disabled = true;
+      if (i === q.c) btn.classList.add("correct");
+      else if (i === answered) btn.classList.add("wrong");
+    }
+    btn.addEventListener("click", () => selectAnswer(idx, i));
+    container.appendChild(btn);
+  });
+
+  const expEl = document.getElementById("explanation");
+  if (answered !== undefined) {
+    expEl.textContent = "Explanation: " + q.e;
+    expEl.className = "explanation show";
+  } else {
+    expEl.className = "explanation";
+    expEl.textContent = "";
+  }
+
+  document.getElementById("prevBtn").disabled = state.current === 0;
+  document.getElementById("nextBtn").disabled = state.current >= visible.length - 1;
+
+  updateStats(visible);
+}
+
+function updateStats(visible) {
+  const totalAnswered = Object.keys(state.answers).length;
+  const totalCorrect = Object.entries(state.answers).filter(([i, a]) => QUESTIONS[i].c === a).length;
+  document.getElementById("scoreText").textContent = "Score: " + totalCorrect + " / " + totalAnswered;
+  const pct = visible.length ? Math.round(((state.current + 1) / visible.length) * 100) : 0;
+  document.getElementById("progressFill").style.width = pct + "%";
+  document.getElementById("progressText").textContent = visible.length ? ("Question " + (state.current + 1) + " of " + visible.length) : "No questions";
+}
+
+function selectAnswer(idx, choice) {
+  if (state.answers[idx] !== undefined) return;
+  state.answers[idx] = choice;
+  saveState();
+  renderQuestion();
+}
+
+document.getElementById("topicFilter").addEventListener("change", (e) => {
+  state.filterTopic = e.target.value;
+  state.current = 0;
+  saveState();
+  renderQuestion();
+});
+
+document.getElementById("shuffleBtn").addEventListener("click", () => {
+  for (let i = state.order.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [state.order[i], state.order[j]] = [state.order[j], state.order[i]];
+  }
+  state.current = 0;
+  saveState();
+  renderQuestion();
+});
+
+document.getElementById("filterUnanswered").addEventListener("click", () => {
+  state.unansweredOnly = !state.unansweredOnly;
+  document.getElementById("filterUnanswered").style.background = state.unansweredOnly ? "var(--accent-light)" : "";
+  document.getElementById("filterUnanswered").style.color = state.unansweredOnly ? "var(--accent)" : "";
+  state.current = 0;
+  saveState();
+  renderQuestion();
+});
+
+document.getElementById("prevBtn").addEventListener("click", () => {
+  if (state.current > 0) { state.current--; saveState(); renderQuestion(); }
+});
+document.getElementById("nextBtn").addEventListener("click", () => {
+  const visible = getVisibleOrder();
+  if (state.current < visible.length - 1) { state.current++; saveState(); renderQuestion(); }
+});
+
+document.getElementById("themeToggle").addEventListener("click", () => {
+  state.theme = state.theme === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", state.theme);
+  document.getElementById("themeToggle").textContent = state.theme === "dark" ? "☀️ Light" : "🌙 Dark";
+  saveState();
+});
+
+document.getElementById("resetBtn").addEventListener("click", () => {
+  if (confirm("Reset all progress and scores? This cannot be undone.")) {
+    state.answers = {};
+    state.current = 0;
+    state.order = QUESTIONS.map((_, i) => i);
+    state.unansweredOnly = false;
+    saveState();
+    renderQuestion();
+  }
+});
+
+loadState();
+populateTopicFilter();
+if (state.unansweredOnly) {
+  document.getElementById("filterUnanswered").style.background = "var(--accent-light)";
+  document.getElementById("filterUnanswered").style.color = "var(--accent)";
+}
+renderQuestion();
+</script>
+</body>
+</html>
